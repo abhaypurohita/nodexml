@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
+//trials xml routes
+var trials = require('./routes/trials');
 //var users = require('./routes/users');
 
 var app = express();
@@ -24,6 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', index);
+//trials routes
+app.use('/api/trials', trials);
+app.use('/api/trials/syncfiles', trials); //download files from ftp location
 //app.use('/users', users);
 
 // catch 404 and forward to error handler
