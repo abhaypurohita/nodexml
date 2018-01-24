@@ -1,0 +1,47 @@
+var express = require('express');
+var router = express.Router();
+var package = require('../package');
+
+//api config
+var config = require('../config');
+
+//ftp client
+var ftpClient = require('ftp-client');
+
+//ftp options
+var ftpconfig = {
+    host: config.ftp.host,
+    port: config.ftp.port,
+    user: config.ftp.username,
+    password: config.ftp.password
+};
+
+var ftpoptions = {
+    logging: 'debug'
+};
+
+//api/trials - root level for this router
+router.get('/', function(req, res, next){
+    res.status(200).json({
+        version: package.version,
+        author: package.author
+    });
+});
+
+//api/trials/downloadfiles - xml files from ftp
+router.get('/syncfiles', function(req, res, next){    
+    //get ftp connection
+    var fclient = new ftpClient(ftpconfig, ftpoptions);
+    /*fclient.connect((err) => {
+        if(err) {
+            console.log('error connecting to ftp');
+        } else {
+            console.log('ftp connected');
+        }
+    });*/
+    fclient.connect(function() {
+
+    });
+});
+
+module.exports = router;

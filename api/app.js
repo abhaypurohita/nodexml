@@ -28,7 +28,7 @@ app.use('/', index);
 app.use('/api', index);
 //trials routes
 app.use('/api/trials', trials);
-app.use('/api/trials/syncfiles', trials); //download files from ftp location
+app.use('/api/trials/downloadfiles', trials); //download files from ftp location
 //app.use('/users', users);
 
 // catch 404 and forward to error handler

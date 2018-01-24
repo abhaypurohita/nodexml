@@ -7,11 +7,12 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
-    "ftpsync": "^0.2.0",
+    "ftp": "^0.3.10",
     "jade": "~1.11.0",
     "morgan": "~1.9.0",
     "nodemon": "^1.14.11",

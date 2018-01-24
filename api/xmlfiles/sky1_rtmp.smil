@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE smil PUBLIC "-//W3C//DTD SMIL 2.0//EN" "http://www.w3.org/
+2001/SMIL20/SMIL20.dtd">
+<smil xmlns="http://www.w3.org/2001/SMIL20/Language">
+  <head>
+    <meta base="rtmp://cp319573.live.edgefcs.net/live/"/>
+  </head>
+  <body>
+    <switch>
+	<video src="Sky1_1_400@330683" system-bitrate="360000"/>
+	<video src="Sky1_1_500@330683" system-bitrate="480000"/>
+	<video src="Sky1_1_700@330683" system-bitrate="680000"/>
+	<video src="Sky1_1_900@330683" system-bitrate="900000"/>
+    </switch>
+  </body>
+</smil>

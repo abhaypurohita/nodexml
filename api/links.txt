@@ -1,0 +1,3 @@
+http://blog.jonathanchannon.com/2014/03/22/using-node-and-ftp-with-promises/
+
+https://www.npmjs.com/package/ftp

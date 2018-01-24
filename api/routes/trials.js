@@ -1,20 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
+var Promise = require('bluebird');
+var Client = require('ftp');
+var fs = require('fs');
 var package = require('../package');
-
-//ftp sync
-var ftpsync = require('ftpsync');
 //api config
 var config = require('../config');
-
-//ftpsync options
-var options = {
-    host: config.ftp.host,
-    user: config.ftp.username,
-    pass: config.ftp.password,
-    local: config.ftp.localpath,
-    remote: config.ftp.remotepath
-};
 
 //api/trials - root level for this router
 router.get('/', function(req, res, next){
@@ -25,18 +17,37 @@ router.get('/', function(req, res, next){
 });
 
 //api/trials/downloadfiles - xml files from ftp
-router.get('/syncfiles', function(req, res, next){    
-    ftpsync.settings = options;
-    
-    ftpsync.run(function(err, result) {
+router.get('/downloadfiles', function(req, res, next){
+    const ftpconn = new Client();
+
+    const connectionProperties = {
+        host: config.ftp.host,
+        user: config.ftp.username,
+        password: config.ftp.password
+    };
+
+    const current = Promise.resolve();
+
+    ftpconn.connect(connectionProperties);        
+    //change working directory
+    ftpconn.cwd(config.ftp.remotepath, (err, currentDir) => {
         if(err) {
-            res.status(503).json({
-                error: {
-                    message: 'Error connecting to remote folder'
-                }
-            });
+            //@todo - return res response
+            console.log('some error in directory path change');
         } else {
-            console.log('downloading files');
+            //directory listing
+            ftpconn.list(config.ftp.remotepath, (err, list) => {
+                for(const file of list) {
+                    console.log(file);
+                    //download file
+                    ftpconn.get(file.name, function(err, stream) {                        
+                        console.log('downloading file = '+file.name);
+                        stream.pipe(fs.createWriteStream(config.ftp.localpath+'/'+file.name));
+                        stream.once('close', function() {});
+                    });
+                }
+                ftpconn.end();
+            });
         }
     });
 });
